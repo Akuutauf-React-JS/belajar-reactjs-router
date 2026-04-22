@@ -1,0 +1,59 @@
+client atau server side
+- saat kita membuat web, terdapat 2 pilihan yang bisa kita pilih, CSR (client side render), atau SSR (server side render)
+- saat kita menggunakan frontend framework seperti react, biasanya pilihan pertama adalah menggunakan CSR (client side render)
+- hal ini menjadikan bagian server tidak menangani halaman web lagi dan tidak perlu membuat HTML lagi, semua dikerjakan oleh (device/browser) client oleh react
+- secara otomatis CSR akan semakin cepat dibandingkan SSR, karena komunikasi ke server bisa dibuat minimal dan data yang dikirim/diterima tidak terlalu besar
+
+server side render
+1. user melakukan request (url) ke server (app)
+2. di sisi server akan memanipulasi dan mengkalkulasi data yang diperlukan dan mengembalikan ke browser (user) berupa HTML
+3. disisi browser (milik user) akan melakukan render HTML sesuai dengan informasi yang sudah dilakukan
+
+client side render
+1. user melakukan request cukup melalui browser
+2. request akan ditangani oleh react
+3. react, menggunakan ajax untuk berkomunikasi ke server melalui API
+4. kemudian server akan mengembalikan response API dalam bentuk json yang dikirimkan ke react (browser)
+5. dan react akan menampilkan nya ke user
+
+MPA (multi page application)
+- sebelumnya, ketika belajar react dasar, kita membuat banyak sekali halaman HTML, dan tiap halaman HTML menampilkan component react
+- hal ini artinya walaupun aplikasi yang sudah kita buat adalah CSR, namun tetap multi page 
+- problem dengan MPA (multi page application) adalah, setiap berganti halaman, maka browser akan menjalankan ulang program react-nya dari awal lagi (reload/render ulang dari awal)
+- hal ini menyebabkan walaupun sudah menggunakan CSR, namun kemungkinan tidak optimal karena harus di load ulang semuanya ketika berpindah halaman
+
+SPA (Single Page Application)
+- kebalikan dari MPA, adalah SPA, dimana kita hanya membuat satu halaman HTML
+- nanti halaman itu yang akan menerima semua request, dari isi halamannya akan berubah sesuai dengan request yang diminta oleh User atau sesuai response dari server
+- keuntungan dari SPA adalah perpindahan halaman lebih cepat, karena hanya mengubah isi content saja, tidak harus me-load ulang seluruh halaman lagi
+- namun sayangnya, secara default, react tidak mendukung SPA dengan baik
+- kita harus lakukan semuanya secara manual jika ingin mengganti-ganti isi dari halaman, dan itu sangat rumit dilakukan
+
+router library
+- salah satu hal yang bisa kita lakukan dibanding mengganti-ganti halaman secara manual, adalah menggunakan library khusus untuk itu, yaitu router library
+- router library adalah library yang digunakan agar component yang ditampilkan bisa berbeda-beda tergantung dari URL yang diakses
+- dengan begitu, kita bisa fokus membuat component untuk halaman, tidak perlu memikirkan lagi kompleksitas bagaimana cara melakukan routing (menentukan component mana yang ditampilkan untuk URL yang diakses)
+- untungnya, banyak sekali router library yang tersedia untuk react
+
+react router
+- ada banyak sekali router library yang bisa kita gunakan untuk react
+- referensi : https://react.libhunt.com/libs/router/react
+- namun pada materi ini, kita akan menggunakan salah satu router library yang populer, yaitu adalah React Router
+- referensi : https://reactrouter.com/
+- react router adalah salah satu library untuk routing yang opensource dan saat ini sangat populer digunakan di ekosistem react
+- referensi : https://github.com/remix-run/react-router
+
+membuat project
+- npm create vite@latest belajar-reactjs-router -- --template react
+- upgrade versi react ke versi 19
+
+menambahkan library react router
+- npm install react-router
+
+setup react router
+- berbeda saat dengan MPA, ketika membuat SPA, kita cukup membuat satu halaman html sebagain entry point (titik masuk) semua request
+- nanti, penentuan komponen mana yang akan ditampilkan, akan diurus oleh react router
+
+browser router
+- ketika menggunakan react router, saat membuat/melakukan render komponen menggunakan react, kita bisa bungkus aplikasi react kita menggunakan browser router
+- referensi : https://api.reactrouter.com/v7/functions/react-router.BrowserRouter.html
