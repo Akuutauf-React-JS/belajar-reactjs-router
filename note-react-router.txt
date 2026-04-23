@@ -57,3 +57,107 @@ setup react router
 browser router
 - ketika menggunakan react router, saat membuat/melakukan render komponen menggunakan react, kita bisa bungkus aplikasi react kita menggunakan browser router
 - referensi : https://api.reactrouter.com/v7/functions/react-router.BrowserRouter.html
+
+routing
+- routing adalah pemetaan antara URL path dan komponen yang akan ditampilkan
+- untuk melakukan routing, kita bisa menggunakan komponen <Routes>
+- referensi : https://api.reactrouter.com/v7/functions/react-router.Routes.html
+- dan untuk pemetaan tiap routing nya, kita bisa gunakan komponen <Route>
+- referensi : https://api.reactrouter.com/v7/functions/react-router.Route.html
+
+nested route
+- saat nanti kita membuat routing, kadang terdapat routing yang memiliki prefix yang sama
+- jika kita harus buat satu per-satu, maka akan tidak efektif ketika pembuatan kode nya
+- untungnya, react router mendukung nested route
+- kita bisa membuat komponen route di dalam komponen route, dan secara otomatis Route path diatas nya akan digunakan sebagai prefix untuk child Route nya
+
+index route
+- komponen route memiliki attribute spesial bernama index
+- attribute ini digunakan sebagai default halaman index
+- ini biasanya digunakan untuk path awal, misal '/', atau untuk nested path '/data/...'
+- contoh sebelumnya, saat kita membuka '/data/', maka tidak ada komponen yang ditampilkan, kita bisa tampilkan komponen yang kita mau dengan menggunakan route index
+- misalnya, sekarang kita akan buat komponen data untuk route index
+
+outlet
+- saat kita membuat halaman web, kadang beberapa halaman memiliki layout yang sama. misal header dan footer nya sama, namun isi content nya berbeda
+- sebenarnya kita bisa menggunakan JSX untuk melakukan ini dengan menggunakan children
+- namun, react router memiliki cara yang lebih mudah, kita bisa membuat route dengan component yang digunakan sebagai layout
+- lalu kita bisa tambahkan route didalamnya yang digunakan sebagai children
+- namun kita tidak menggunakan children props lagi, melainkan menggunakan component Outlet
+- referensi : https://api.reactrouter.com/v7/functions/react-router.Outlet.html
+
+route param
+- saat kita membuat URL path, kadang kita tidak membuat path yang statis, kadangkala butuh membuat path yang dinamis
+- misalnya kita ingin menambahkan 'id' / kode pada path, misal '/product/123', dimana '123' adalah id dari data Product
+- di react router, kita juga bisa lakukan hal ini, dengan menambahkan tanda ':' (titik dua), diikuti dengan nama parameter(param). Contoh: '/products/:id', id dianggap sebagai parameter dinamis
+- jika kita menggunakan route '/product/123', maka '123' dianggap sebagai data parameter id
+
+useParams()
+- saat kita membuat path yang dinamis, biasanya kita ingin mendapatkan informasi dari path yang dinamis tersebut
+- seluruh dynamic param yang terdapat di URL path secara otomatis akan disimpan dalam object, dan kita bisa mengambilnya menggunakan function 'useParams()'
+- referensi : https://api.reactrouter.com/v7/functions/react-router.useParams.html
+- misal, sekarang kita akan coba tambahankan useParams() pada komponen ProductDetail
+
+mutiple route param
+- kita bisa menambahkan dynamic param pada path lebih dari satu
+- yang penting kita gunakan nama dynamic param yang berbeda, misal: '/users/:userId/addresses/:addressId
+- maka kita bisa dapatkan informasi userId dan addressId di object hasil dari 'useParams()'
+
+star segment
+- jika route path diakhiri dengan '/*' (star segment), maka itu akan cocok dengan karakter apapun, termasuk karakter slash '/' itu sendiri
+- misal, ketika kita memiliki path '/files/*', maka akan cocok dengan '/files/contoh' dan '/files/lagi/contoh'
+- star segment juga bisa diambil nilainya pada 'useParams()'
+
+star segment sebagai Not Found page
+- apa yang terjadi jika kita mengakses URL path yang tidak tersedia di router?
+- kita akan mendapatkan error bahwa tidak ada route yang cocok dengan path yang kita akses
+- salah satu yang biasa dilakukan di react router adalah, kita bisa menambahkan star segment untuk path '/*' pada bagian bawah sebagai handler untuk menangani halaman Not Found
+- sekarang kita akan coba buat komponen NotFound, dan registrasikan ke route path '/*'
+
+navigation
+- salah satu yang biasa kita lakukan saat membuat web, adalah berpindah dari satu halaman ke halaman yang lainnya
+- biasanya untuk perpindahan halaman, kita biasanya akan menggunakan anchor element, yaitu menggunakan tag '<a>'
+- namun permasalahannya adalah, ketika mengunakan anchor element, maka browser akan melakukan reload ke halaman baru, yang artinya halaman akan dimuat ulang, termasuk object react juga akan dibuat ulang semuanya
+- hal ini mungkin akan memperlambat proses perpindahan halaman
+
+link element
+- react router menyediakan komponen link
+- komponen link ini digunakan sebagai pengganti anchor element
+- berbeda dengan anchor element biasanya, komponen link ini tidak akan melakukan reload halaman
+- referensi : https://api.reactrouter.com/v7/functions/react-router.Links.html
+
+link to
+- attribute to di komponen Link bisa menerima parameter object, dimana terdapat attribute 'pathname', 'search' dan 'hash'
+- attribute pathname untuk lokasi path
+- attribute search untuk query parameter
+- dan attribute hash untuk #fragmen
+
+nav link
+- salah satu yang biasa kita lakukan ketika membuat link adalah, membedakan style link yang sedang aktif dan yang tidak aktif
+- biasanya, kita lakukan pengecekan, jika URl path yang sedang dikunjungi saat ini sama dengan tujuan link, maka kita ubah style nya menjadi aktif
+- react router menyediakan komponen khusus untuk mempermudah hal ini, cara penggunaanya sama seperti komponen link, namun bedanya jika URL path saat ini sama dengan tujuan dari navlink, maka secara otomatis NavLink akan menggunakan style 'a.active' (memiliki nilai aktif atau tidak)
+- referensi : https://api.reactrouter.com/v7/variables/react-router.NavLink.html
+
+use navigate
+- pada kasus tertentu, mungkin kita ingin melakukan navigasi dari satu halaman ke halaman lain menggunakan javascript
+- untuk melakukan ini, react router menyediakan hooks 'useNavigate()'
+- referensi : https://api.reactrouter.com/v7/functions/react-router.useNavigate.html
+- useNavigate() akan mengembalikan function yang bisa kita gunakan untuk berpindah ke halaman lain
+- referensi : https://api.reactrouter.com/v7/interfaces/react-router.NavigateFunction.html
+- kita bisa gunakan parameter path
+- referensi : https://api.reactrouter.com/v7/interfaces/react-router.Path.html
+- atau number (untuk maju/mundur), contoh: -1 (untuk mundur satu kali), -2 (untuk mundur ke halaman sebelumnya dua kali), dst
+
+use search param
+- saat menggunakan URL, kadang kita akan memafaatkan query parameter untuk mengirim data
+- react router menyediakan hook 'useSearchParams()' yang bisa kita gunakan untuk mendapatkan data query parameter
+- referensi : https://api.reactrouter.com/v7/functions/react-router.useSearchParams.html
+- useSearchParams() akan mengembalikan array yang berisi object URLSearchParams dan setter function nya
+- referensi : https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+
+use location
+- untuk mendapatkan URL saat ini, sebenarnya kita bisa menggunakan 'window.location.href'
+- tapi react router menyediakan hook 'useLocation()', yang bisa digunakan untuk mendapatkan lokasi path saat ini
+- referensi : https://api.reactrouter.com/v7/functions/react-router.useLocation.html
+- hasil dari return dari 'useLocation()' adalah object location, sehingga kita bisa dapat informasi lengkap dari location, seperti path, query sampai ke fragment #fragment
+- referensi : https://api.reactrouter.com/v7/interfaces/react-router.Location.html
